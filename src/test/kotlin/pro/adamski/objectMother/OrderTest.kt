@@ -3,7 +3,7 @@ package pro.adamski.objectMother
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class OrderSystemTest {
+class OrderTest {
 
     @Test
     fun testCustomOrder() {
@@ -21,6 +21,27 @@ class OrderSystemTest {
     fun testRandomLargeOrder() {
         // When
         val largeOrder = ObjectMother.largeOrder()
+
+        // Then
+        assertOrderProducts(largeOrder, 100, 1000.0..5000.0)
+    }
+
+    @Test
+    fun testCustomOrderJava() {
+        // Given
+        val customProduct = ObjectMotherJava.product().withName("Custom Laptop").withPrice(2000.0).build()
+
+        // When
+        val customOrder = ObjectMotherJava.order().withProducts(listOf(customProduct)).build()
+
+        // Then
+        assertOrderProduct(customOrder.products.first(), "Custom Laptop", 2000.0)
+    }
+
+    @Test
+    fun testRandomLargeOrderJava() {
+        // When
+        val largeOrder = ObjectMotherJava.largeOrder()
 
         // Then
         assertOrderProducts(largeOrder, 100, 1000.0..5000.0)
